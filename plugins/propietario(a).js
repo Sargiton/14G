@@ -165,7 +165,7 @@ case isCommand5:
 if (!text) return m.reply(lenguajeGB.smsNameEd1())
 if (text.length > 25) return m.reply(lenguajeGB.smsNameEd2())
 try {
-await conn.updateProfileStatus(text).catch(_ => _)
+await conn.updateProfileName(text).catch(_ => _)
 await conn.reply(m.chat, lenguajeGB.smsNameEd3(), m)
 } catch (e) {
 reportError(e)

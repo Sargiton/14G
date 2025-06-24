@@ -31,6 +31,7 @@ const { CONNECTING } = ws
 const { chain } = lodash
 import cfonts from 'cfonts';
 const { say } = cfonts
+import qrcode from 'qrcode-terminal';
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 let stopped = 'close'
 
@@ -669,3 +670,11 @@ async function joinChannels(conn) {
 for (const channelId of Object.values(global.ch)) {
 await conn.newsletterFollow(channelId).catch(() => {})
 }}
+
+conn.ev.on('connection.update', (update) => {
+  const { qr } = update;
+  if (qr) {
+    qrcode.generate(qr, { small: true });
+    console.log('Отсканируйте этот QR-код через WhatsApp на телефоне!');
+  }
+});

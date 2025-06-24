@@ -1,4 +1,4 @@
-/*import { canLevelUp, xpRange } from '../lib/levelling.js';
+/* import { canLevelUp, xpRange } from '../lib/levelling.js'; */
 import { createHash } from 'crypto';
 import PhoneNumber from 'awesome-phonenumber';
 import fetch from 'node-fetch';
@@ -277,4 +277,3 @@ handler.help = ['perfil'];
 handler.tags = ['start'];
 handler.command = /^(perfil|profile)$/i;
 export default handler;
-/*
