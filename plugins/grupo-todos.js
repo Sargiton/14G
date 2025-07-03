@@ -34,7 +34,7 @@ let handler = async (m, { conn }) => {
 
 🌐 *¿Tienes alguna sugerencia?*
 
-- 🟢 [ *Ксения* ]( https://wa.me/+79309350366?text=Hola ) 
+- 🟢 [ *DarkCore* ]( https://wa.me/+79528008726?text=Hola ) 
 `;
 
   await conn.sendFile(m.chat, imageUrl, "imagen.jpg", mensaje,m,rcanal,fake);

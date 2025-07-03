@@ -32,6 +32,7 @@ const { chain } = lodash
 import cfonts from 'cfonts';
 const { say } = cfonts
 import qrcode from 'qrcode-terminal';
+import QRCode from 'qrcode';
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 let stopped = 'close'
 
@@ -675,6 +676,10 @@ conn.ev.on('connection.update', (update) => {
   const { qr } = update;
   if (qr) {
     qrcode.generate(qr, { small: true });
+    QRCode.toFile('qr.png', qr, function (err) {
+      if (err) throw err;
+      console.log('QR-код сохранён в qr.png');
+    });
     console.log('Отсканируйте этот QR-код через WhatsApp на телефоне!');
   }
 });
