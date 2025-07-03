@@ -1,3 +1,22 @@
+const TelegramBot = require('node-telegram-bot-api');
+const fs = require('fs');
+const path = require('path');
+const { exec } = require('child_process');
+
+const OWNER_ID = 1424509648; // ЗАМЕНИ на свой Telegram user ID!
+const TELEGRAM_TOKEN = '7882415806:AAGKIWslOZtVsK-EIHyHdIrM0jNS73BAnkM';
+const WHATSAPP_PM2_NAME = 'whatsapp-bot';
+
+const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
+
+function onlyOwner(msg) {
+  if (msg.from.id !== OWNER_ID) {
+    bot.sendMessage(msg.chat.id, 'Нет доступа.');
+    return false;
+  }
+  return true;
+}
+
 bot.onText(/\/full_reset/, async (msg) => {
   if (!onlyOwner(msg)) return;
   const sessionPath = path.join(__dirname, 'LynxSession');
@@ -7,7 +26,7 @@ bot.onText(/\/full_reset/, async (msg) => {
   } else {
     bot.sendMessage(msg.chat.id, 'Папка LynxSession не найдена. Перезапускаю WhatsApp-бота...');
   }
-  exec('pm2 restart whatsapp-bot', (err, stdout, stderr) => {
+  exec(`pm2 restart ${WHATSAPP_PM2_NAME}`, (err, stdout, stderr) => {
     if (err) return bot.sendMessage(msg.chat.id, 'Ошибка при перезапуске WhatsApp-бота: ' + stderr);
     setTimeout(() => {
       const qrPath = path.join(__dirname, 'qr.png');
@@ -16,6 +35,6 @@ bot.onText(/\/full_reset/, async (msg) => {
       } else {
         bot.sendMessage(msg.chat.id, 'Файл qr.png не найден. Сначала сгенерируйте QR-код.');
       }
-    }, 3000);
+    }, 5000);
   });
 }); 
