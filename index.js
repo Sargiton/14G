@@ -258,38 +258,9 @@ resolver(respuesta.trim())
 })})
 }
 
-let opcion
-if (methodCodeQR) {
-opcion = '1'
-}
-if (!methodCodeQR && !methodCode && !fs.existsSync(`./${authFile}/creds.json`)) {
-do {
-let lineM = '⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ 》'
-opcion = await question(`╭${lineM}  
-┊ ${chalk.blueBright('╭┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}
-┊ ${chalk.blueBright('┊')} ${chalk.blue.bgBlue.bold.cyan(lenguajeGB['methodCode1']())}
-┊ ${chalk.blueBright('╰┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}   
-┊ ${chalk.blueBright('╭┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}     
-┊ ${chalk.blueBright('┊')} ${chalk.green.bgMagenta.bold.yellow(lenguajeGB['methodCode2']())}
-┊ ${chalk.blueBright('┊')} ${chalk.bold.redBright(`⇢  ${lenguajeGB['methodCode3']()} 1:`)} ${chalk.greenBright(lenguajeGB['methodCode4']())}
-┊ ${chalk.blueBright('┊')} ${chalk.bold.redBright(`⇢  ${lenguajeGB['methodCode3']()} 2:`)} ${chalk.greenBright(lenguajeGB['methodCode5']())}
-┊ ${chalk.blueBright('╰┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}
-┊ ${chalk.blueBright('╭┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}     
-┊ ${chalk.blueBright('┊')} ${chalk.italic.magenta(lenguajeGB['methodCode6']())}
-┊ ${chalk.blueBright('┊')} ${chalk.italic.magenta(lenguajeGB['methodCode7']())}
-┊ ${chalk.blueBright('╰┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')} 
-┊ ${chalk.blueBright('╭┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}    
-┊ ${chalk.blueBright('┊')} ${chalk.red.bgRed.bold.green(lenguajeGB['methodCode8']())}
-┊ ${chalk.blueBright('┊')} ${chalk.italic.cyan(lenguajeGB['methodCode9']())}
-┊ ${chalk.blueBright('┊')} ${chalk.italic.cyan(lenguajeGB['methodCode10']())}
-┊ ${chalk.blueBright('┊')} ${chalk.bold.yellow(`npm run qr ${chalk.italic.magenta(`(${lenguajeGB['methodCode12']()})`)}`)}
-┊ ${chalk.blueBright('┊')} ${chalk.bold.yellow(`npm run code ${chalk.italic.magenta(`(${lenguajeGB['methodCode13']()})`)}`)}
-┊ ${chalk.blueBright('┊')} ${chalk.bold.yellow(`npm start ${chalk.italic.magenta(`(${lenguajeGB['methodCode14']()})`)}`)}
-┊ ${chalk.blueBright('╰┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')} 
-╰${lineM}\n${chalk.bold.magentaBright('---> ')}`)
-if (!/^[1-2]$/.test(opcion)) {
-console.log(chalk.bold.redBright(lenguajeGB['methodCode11'](chalk)))
-}} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${authFile}/creds.json`))
+let opcion;
+if (methodCodeQR || (!methodCodeQR && !methodCode && !fs.existsSync(`./${authFile}/creds.json`))) {
+  opcion = '1'; // всегда выбираем QR-код автоматически
 }
 
 console.info = () => {} 
