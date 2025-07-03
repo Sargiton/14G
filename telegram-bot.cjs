@@ -3,14 +3,14 @@ const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 
-const OWNER_ID = 1424509648; // ЗАМЕНИ на свой Telegram user ID!
+const OWNER_IDS = [1424509648, 393422971]; // Массив разрешённых Telegram user ID
 const TELEGRAM_TOKEN = '7882415806:AAGKIWslOZtVsK-EIHyHdIrM0jNS73BAnkM';
 const WHATSAPP_PM2_NAME = 'whatsapp-bot';
 
 const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
 
 function onlyOwner(msg) {
-  if (msg.from.id !== OWNER_ID) {
+  if (!OWNER_IDS.includes(msg.from.id)) {
     bot.sendMessage(msg.chat.id, 'Нет доступа.');
     return false;
   }
