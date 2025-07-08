@@ -9,13 +9,13 @@ import moment from 'moment-timezone'
 import {  en, es, id, ar, pt, de, it  } from './lib/idiomas/total-idiomas.js'
 
 global.owner = [
-  ['79309350366', 'Ксения', true],
+  ['79917463443', 'Ксения', true],
   [''],
   ['']
 ]
 
 global.official = [ 
-['79309350366', 'Ксения 💻', 1], 
+['79917463443', 'Ксения 💻', 1], 
 ] 
 
 global.mods = [] 

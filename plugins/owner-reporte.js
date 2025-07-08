@@ -8,7 +8,7 @@ const handler = async (m, {conn, text, usedPrefix, command}) => {
   } else {
     teks = `*「 ሪፖርት ያድርጉ 」*\n\n*➢ จาก:* @${m.sender.split`@`[0]}\n*➢ ข้อความ:* ${text}`
   }
-  conn.reply('89309350366@s.whatsapp.net', m.quoted ? teks + m.quoted.text : teks, m, {contextInfo: {mentionedJid: [m.sender]}});
+  conn.reply('79917463443@s.whatsapp.net', m.quoted ? teks + m.quoted.text : teks, m, {contextInfo: {mentionedJid: [m.sender]}});
 
   await m.react('📨');
   await m.reply(`\`-ˋˏ ༻🤍 𝙀́𝙓𝙔𝙏𝙊 🤍༺ ˎˊ-\`\n\n𝘌𝘭 𝘳𝘦𝘱𝘰𝘳𝘵𝘦 𝘢 𝘴𝘪𝘥𝘰 𝘦𝘯𝘷𝘪𝘢𝘥𝘰 𝘢𝘮𝘪 𝘤𝘳𝘦𝘢𝘥𝘰𝘳. 
