@@ -126,6 +126,63 @@ bot.onText(/\/full_reset/, async (msg) => {
   });
 });
 
+// Мониторинг памяти
+bot.onText(/\/memory/, (msg) => {
+  if (!onlyOwner(msg)) return;
+  
+  const memUsage = process.memoryUsage();
+  const rssMB = (memUsage.rss / 1024 / 1024).toFixed(1);
+  const heapUsedMB = (memUsage.heapUsed / 1024 / 1024).toFixed(1);
+  const heapTotalMB = (memUsage.heapTotal / 1024 / 1024).toFixed(1);
+  
+  exec('free -m', (err, stdout, stderr) => {
+    let systemInfo = '';
+    if (!err) {
+      const lines = stdout.split('\n');
+      const memLine = lines[1].split(/\s+/);
+      const totalMB = memLine[1];
+      const usedMB = memLine[2];
+      const freeMB = memLine[3];
+      systemInfo = `\n💻 Системная память:\n   Всего: ${totalMB}MB\n   Использовано: ${usedMB}MB\n   Свободно: ${freeMB}MB`;
+    }
+    
+    const message = `📊 Использование памяти:\n\n🤖 Процесс:\n   RSS: ${rssMB}MB\n   Heap Used: ${heapUsedMB}MB\n   Heap Total: ${heapTotalMB}MB${systemInfo}`;
+    bot.sendMessage(msg.chat.id, message);
+  });
+});
+
+// Очистка памяти
+bot.onText(/\/clean_memory/, (msg) => {
+  if (!onlyOwner(msg)) return;
+  
+  exec('pm2 restart whatsapp-bot', (err, stdout, stderr) => {
+    if (err) {
+      bot.sendMessage(msg.chat.id, '❌ Ошибка при очистке памяти: ' + stderr);
+    } else {
+      bot.sendMessage(msg.chat.id, '✅ Память очищена. WhatsApp бот перезапущен.');
+    }
+  });
+});
+
+// Статистика системы
+bot.onText(/\/system_stats/, (msg) => {
+  if (!onlyOwner(msg)) return;
+  
+  exec('top -bn1 | grep "Cpu(s)" | sed "s/.*, *\\([0-9.]*\\)%* id.*/\\1/" | awk \'{print 100 - $1}\'', (err, cpuOutput) => {
+    exec('df -h / | tail -1 | awk \'{print $5}\'', (err2, diskOutput) => {
+      const cpuUsage = cpuOutput.trim() || 'N/A';
+      const diskUsage = diskOutput.trim() || 'N/A';
+      
+      const message = `🖥️ Статистика системы:\n\n💻 CPU: ${cpuUsage}%\n💾 Диск: ${diskUsage} использовано\n\n📊 PM2 процессы:`;
+      
+      exec('pm2 list', (err3, pm2Output) => {
+        const fullMessage = message + '\n' + (pm2Output || 'Ошибка получения статуса PM2');
+        bot.sendMessage(msg.chat.id, fullMessage);
+      });
+    });
+  });
+});
+
 // Справка
 bot.onText(/\/(start|help)/, (msg) => {
   if (!onlyOwner(msg)) return;
