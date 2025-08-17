@@ -26,7 +26,7 @@ import store from './lib/store.js'
 import readline from 'readline'
 import NodeCache from 'node-cache'
 import { gataJadiBot } from './plugins/jadibot-serbot.js';
-const { PHONENUMBER_MCC, makeInMemoryStore, DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore } = await import('@whiskeysockets/baileys')
+const { PHONENUMBER_MCC, makeInMemoryStore, DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser } = await import('@whiskeysockets/baileys')
 const { CONNECTING } = ws
 const { chain } = lodash
 import cfonts from 'cfonts';
