@@ -3,55 +3,31 @@ module.exports = {
     {
       name: 'whatsapp-bot',
       script: 'index.js',
-      instances: 1,
-      autorestart: true,
-      watch: false,
-      max_memory_restart: '1G',
+      interpreter: 'node',
       env: {
-        NODE_ENV: 'production',
-        NODE_OPTIONS: '--max-old-space-size=1024 --expose-gc',
-        UV_THREADPOOL_SIZE: 4
+        NODE_OPTIONS: '--max-old-space-size=768',
+        UV_THREADPOOL_SIZE: '4',
       },
-      error_file: './logs/err.log',
+      max_memory_restart: '900M',
+      watch: false,
+      autorestart: true,
       out_file: './logs/out.log',
-      log_file: './logs/combined.log',
+      error_file: './logs/error.log',
       time: true,
-      // Оптимизации для памяти
-      node_args: '--max-old-space-size=1024 --expose-gc',
-      // Автоматический перезапуск при превышении памяти
-      max_restarts: 10,
-      min_uptime: '10s',
-      // Мониторинг памяти
-      pmx: true,
-      // Логирование
-      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
-      // Ограничения
-      kill_timeout: 5000,
-      wait_ready: true,
-      listen_timeout: 10000
     },
     {
-      name: 'telegram-bot',
+      name: 'telegram-admin',
       script: 'telegram-bot.cjs',
-      instances: 1,
-      autorestart: true,
-      watch: false,
-      max_memory_restart: '512M',
+      interpreter: 'node',
       env: {
-        NODE_ENV: 'production',
-        NODE_OPTIONS: '--max-old-space-size=512'
+        NODE_OPTIONS: '--max-old-space-size=256',
       },
-      error_file: './logs/telegram-err.log',
-      out_file: './logs/telegram-out.log',
-      log_file: './logs/telegram-combined.log',
+      max_memory_restart: '300M',
+      watch: false,
+      autorestart: true,
+      out_file: './logs/tg-out.log',
+      error_file: './logs/tg-error.log',
       time: true,
-      node_args: '--max-old-space-size=512',
-      max_restarts: 5,
-      min_uptime: '10s',
-      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
-      kill_timeout: 5000,
-      wait_ready: true,
-      listen_timeout: 10000
-    }
-  ]
-}; 
+    },
+  ],
+}

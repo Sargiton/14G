@@ -187,18 +187,9 @@ let queque = this.msgqueque, time = 1000 * 5
 const previousID = queque[queque.length - 1]
 queque.push(m.id || m.key.id)
 setInterval(async function () {
-if (stopped === 'close' || !conn || !conn.user) return
-
-// Проверяем память перед выполнением
-const memUsage = process.memoryUsage();
-const rssMB = memUsage.rss / 1024 / 1024;
-
-if (rssMB < 1200) { // Выполняем только если память меньше 1.2GB
-if (global.db.data) await global.db.save()
-} else {
-console.log(`[⚠️] Пропускаю сохранение БД - высокое использование памяти: ${rssMB.toFixed(1)}MB`);
-}
-}, 60 * 1000) // Увеличил с 30 до 60 секунд
+if (queque.indexOf(previousID) === -1) clearInterval(this)
+await delay(time)
+}, time)
 }
 
 //if (m.isBaileys) return 

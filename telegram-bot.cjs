@@ -3,10 +3,15 @@ const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 
-const OWNER_IDS = [1424509648, 393422971, 2134847831]; // Массив разрешённых Telegram user ID
-const TELEGRAM_TOKEN = '7882415806:AAGKIWslOZtVsK-EIHyHdIrM0jNS73BAnkM';
+require('dotenv').config()
+const OWNER_IDS = (process.env.TG_OWNER_IDS || '').split(',').map(v => v.trim()).filter(Boolean).map(v => parseInt(v, 10))
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN
 const WHATSAPP_PM2_NAME = 'whatsapp-bot';
 
+if (!TELEGRAM_TOKEN) {
+  console.error('TELEGRAM_TOKEN is not set. Please configure your .env')
+  process.exit(1)
+}
 const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
 
 function onlyOwner(msg) {
